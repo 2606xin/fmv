@@ -52,6 +52,21 @@ export default function App() {
   const [canCont, setCanCont] = useState(false);
   const [slots, setSlots] = useState(() => loadSlots());
   const [showHud, setShowHud] = useState(false);
+  const bgmRef = useRef<HTMLAudioElement>(null);
+
+  useEffect(() => {
+    const b = bgmRef.current;
+    if (b) b.volume = Math.min(1, settings.volume * 0.18);
+  }, [settings.volume]);
+
+  const startBgm = useCallback(() => {
+    const b = bgmRef.current;
+    if (!b) return;
+    b.volume = Math.min(1, settings.volume * 0.18);
+    b.play().catch(() => {
+      /* 浏览器在首次用户手势前会拦截，下次交互再试 */
+    });
+  }, [settings.volume]);
   const [unlocks, setUnlocks] = useState<StoryUnlocks>(() => ({
     endings: [],
     routes: [],
@@ -109,8 +124,9 @@ export default function App() {
     setAwaitingChoice(false);
     setSkipToken(0);
     setOverlay("none");
+    startBgm();
     persist(s, story);
-  }, [story, persist]);
+  }, [story, persist, startBgm]);
 
   const continueGame = useCallback(() => {
     const a = loadAutosave();
@@ -120,7 +136,8 @@ export default function App() {
     setAwaitingChoice(a.state.nodeId ? story.nodes[a.state.nodeId]?.type === "ending" : false);
     setSkipToken(0);
     setOverlay("none");
-  }, [story]);
+    startBgm();
+  }, [story, startBgm]);
 
   const pick = useCallback(
     (c: Choice) => {
@@ -249,7 +266,7 @@ export default function App() {
               <div className="caption">{node.caption}</div>
             ) : null}
             {isEnding ? (
-              <EndingCard node={node} onTitle={toTitle} />
+              <EndingCard node={node} volume={settings.volume} onTitle={toTitle} />
             ) : (
               <>
                 <ChoiceOverlay choices={choices} onPick={pick} />
@@ -271,6 +288,7 @@ export default function App() {
         <div className="grain" />
         <div className="vignette" />
         <div className="letterbox" />
+        <audio ref={bgmRef} src="/media/audio/bgm.mp3" loop preload="auto" />
 
         {overlay === "settings" ? (
           <SettingsPanel

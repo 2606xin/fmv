@@ -13,7 +13,16 @@ export function MediaStage({
   skipToken: number;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
   const ended = useRef(false);
+  const finish = useRef<() => void>(() => {});
+
+  finish.current = () => {
+    if (ended.current) return;
+    ended.current = true;
+    audioRef.current?.pause();
+    onEnded();
+  };
 
   useEffect(() => {
     ended.current = false;
@@ -22,6 +31,8 @@ export function MediaStage({
   useEffect(() => {
     const v = videoRef.current;
     if (v) v.volume = volume;
+    const a = audioRef.current;
+    if (a) a.volume = Math.min(1, volume * 1.15);
   }, [volume, node.id]);
 
   useEffect(() => {
@@ -33,23 +44,18 @@ export function MediaStage({
       } catch {
         /* ignore */
       }
-      onEnded();
-      return;
     }
-    onEnded();
+    finish.current();
   }, [skipToken]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // 无配音时沿用时长定时器；有配音时音频结束才收（视频先播完则定格末帧等旁白）
   useEffect(() => {
+    if (node.audio) return;
     if (node.type !== "still" && node.type !== "ending") return;
     const ms = Math.max(1.2, node.duration ?? 6) * 1000;
-    const t = window.setTimeout(() => {
-      if (!ended.current) {
-        ended.current = true;
-        onEnded();
-      }
-    }, ms);
+    const t = window.setTimeout(() => finish.current(), ms);
     return () => window.clearTimeout(t);
-  }, [node.id, node.type, node.duration, onEnded]);
+  }, [node.id, node.type, node.duration, node.audio]);
 
   const src = `/media/${node.media}`;
 
@@ -63,10 +69,7 @@ export function MediaStage({
           autoPlay
           playsInline
           onEnded={() => {
-            if (!ended.current) {
-              ended.current = true;
-              onEnded();
-            }
+            if (!node.audio) finish.current();
           }}
         />
       ) : (
@@ -78,6 +81,21 @@ export function MediaStage({
           draggable={false}
         />
       )}
+      {node.audio ? (
+        <audio
+          key={`${node.id}-audio`}
+          ref={audioRef}
+          src={`/media/${node.audio}`}
+          autoPlay
+          preload="auto"
+          onEnded={() => finish.current()}
+          onError={() => {
+            // 音频缺失：退回时长定时器
+            const ms = Math.max(1.2, node.duration ?? 6) * 1000;
+            window.setTimeout(() => finish.current(), ms);
+          }}
+        />
+      ) : null}
     </div>
   );
 }

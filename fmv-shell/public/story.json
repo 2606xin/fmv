@@ -23,16 +23,23 @@
           "id": "n01_a",
           "text": "在巷口把暗号再背一遍",
           "next": "n02_code",
-          "setFlags": ["cautious"],
-          "inc": { "trust": 1 }
+          "setFlags": [
+            "cautious"
+          ],
+          "inc": {
+            "trust": 1
+          }
         },
         {
           "id": "n01_b",
           "text": "先绕影院走一圈，看有没有尾巴",
           "next": "n03_watch",
-          "setFlags": ["alert"]
+          "setFlags": [
+            "alert"
+          ]
         }
-      ]
+      ],
+      "audio": "audio/n01_narr.mp3"
     },
     "n02_code": {
       "id": "n02_code",
@@ -46,15 +53,20 @@
           "id": "n02_a",
           "text": "去侧门，按老规矩敲",
           "next": "n04_side",
-          "setFlags": ["knowsCode"]
+          "setFlags": [
+            "knowsCode"
+          ]
         },
         {
           "id": "n02_b",
           "text": "从正门混进去，少惹人注意",
           "next": "n05_lobby",
-          "setFlags": ["knowsCode"]
+          "setFlags": [
+            "knowsCode"
+          ]
         }
-      ]
+      ],
+      "audio": "audio/n02_code.mp3"
     },
     "n03_watch": {
       "id": "n03_watch",
@@ -68,17 +80,26 @@
           "id": "n03_a",
           "text": "装作路过，从侧门进",
           "next": "n04_side",
-          "setFlags": ["sawTail"],
-          "inc": { "suspicion": 1 }
+          "setFlags": [
+            "sawTail"
+          ],
+          "inc": {
+            "suspicion": 1
+          }
         },
         {
           "id": "n03_b",
           "text": "进正门，把自己埋进散场的人潮",
           "next": "n05_lobby",
-          "setFlags": ["sawTail"],
-          "inc": { "suspicion": 1 }
+          "setFlags": [
+            "sawTail"
+          ],
+          "inc": {
+            "suspicion": 1
+          }
         }
-      ]
+      ],
+      "audio": "audio/n03_watch.mp3"
     },
     "n04_side": {
       "id": "n04_side",
@@ -92,24 +113,39 @@
           "id": "n04_a",
           "text": "把胶片按进他手里",
           "next": "n07_hand",
-          "setFlags": ["rushed"],
-          "inc": { "suspicion": 1 }
+          "setFlags": [
+            "rushed"
+          ],
+          "inc": {
+            "suspicion": 1
+          }
         },
         {
           "id": "n04_b",
           "text": "先对口令",
           "next": "n06_password",
-          "inc": { "trust": 1 }
+          "inc": {
+            "trust": 1
+          }
         },
         {
           "id": "n04_c",
           "text": "低声说：外面有人",
           "next": "n06_password",
-          "require": { "flags": ["sawTail"] },
-          "setFlags": ["warned"],
-          "inc": { "trust": 2 }
+          "require": {
+            "flags": [
+              "sawTail"
+            ]
+          },
+          "setFlags": [
+            "warned"
+          ],
+          "inc": {
+            "trust": 2
+          }
         }
-      ]
+      ],
+      "audio": "audio/n04_side.mp3"
     },
     "n05_lobby": {
       "id": "n05_lobby",
@@ -123,23 +159,36 @@
           "id": "n05_a",
           "text": "把胶片给她",
           "next": "ending_caught",
-          "setFlags": ["betrayed"],
-          "inc": { "suspicion": 2 }
+          "setFlags": [
+            "betrayed"
+          ],
+          "inc": {
+            "suspicion": 2
+          }
         },
         {
           "id": "n05_b",
           "text": "摇头：我不认识你",
           "next": "n04_side",
-          "setFlags": ["rejectedBait"],
-          "inc": { "trust": 1 }
+          "setFlags": [
+            "rejectedBait"
+          ],
+          "inc": {
+            "trust": 1
+          }
         },
         {
           "id": "n05_c",
           "text": "试探她：「今晚好雨。」",
           "next": "n05_probe",
-          "require": { "flags": ["knowsCode"] }
+          "require": {
+            "flags": [
+              "knowsCode"
+            ]
+          }
         }
-      ]
+      ],
+      "audio": "audio/n05_lobby.mp3"
     },
     "n05_probe": {
       "id": "n05_probe",
@@ -153,10 +202,17 @@
           "id": "n05p_a",
           "text": "去侧门找老周",
           "next": "n04_side",
-          "setFlags": ["rejectedBait", "probed"],
-          "inc": { "trust": 1, "suspicion": 1 }
+          "setFlags": [
+            "rejectedBait",
+            "probed"
+          ],
+          "inc": {
+            "trust": 1,
+            "suspicion": 1
+          }
         }
-      ]
+      ],
+      "audio": "audio/n05_probe.mp3"
     },
     "n06_password": {
       "id": "n06_password",
@@ -170,9 +226,12 @@
           "id": "n06_a",
           "text": "准备交出胶片",
           "next": "n07_hand",
-          "setFlags": ["gavePassword"]
+          "setFlags": [
+            "gavePassword"
+          ]
         }
-      ]
+      ],
+      "audio": "audio/n06_password.mp3"
     },
     "n07_hand": {
       "id": "n07_hand",
@@ -185,14 +244,27 @@
           "id": "n07_a",
           "text": "交出真胶片，走消防通道",
           "next": "ending_ghost",
-          "setFlags": ["gaveReal"],
+          "setFlags": [
+            "gaveReal"
+          ],
           "nextIf": [
             {
-              "require": { "flags": ["sawTail"], "notFlags": ["warned"] },
+              "require": {
+                "flags": [
+                  "sawTail"
+                ],
+                "notFlags": [
+                  "warned"
+                ]
+              },
               "next": "ending_caught"
             },
             {
-              "require": { "min": { "suspicion": 2 } },
+              "require": {
+                "min": {
+                  "suspicion": 2
+                }
+              },
               "next": "ending_caught"
             }
           ]
@@ -201,17 +273,29 @@
           "id": "n07_b",
           "text": "把空胶片塞过去，真货仍在鞋垫下",
           "next": "ending_hook",
-          "setFlags": ["gaveFake"],
-          "inc": { "trust": 1 }
+          "setFlags": [
+            "gaveFake"
+          ],
+          "inc": {
+            "trust": 1
+          }
         },
         {
           "id": "n07_c",
           "text": "让老周先走，你殿后",
           "next": "ending_ghost",
-          "require": { "min": { "trust": 2 } },
-          "setFlags": ["gaveReal", "covered"]
+          "require": {
+            "min": {
+              "trust": 2
+            }
+          },
+          "setFlags": [
+            "gaveReal",
+            "covered"
+          ]
         }
-      ]
+      ],
+      "audio": "audio/n07_narr.mp3"
     },
     "ending_ghost": {
       "id": "ending_ghost",
@@ -220,7 +304,8 @@
       "location": "结局",
       "caption": "你没再出现在这座城里。",
       "endingTitle": "结局 · 影子",
-      "endingBody": "线还在。灰羽这两个字被从名册上划掉，像从未下过这场雨。三天后有人在码头看见一个撑伞的背影，没有回头。你活着——以消失的方式。"
+      "endingBody": "线还在。灰羽这两个字被从名册上划掉，像从未下过这场雨。三天后有人在码头看见一个撑伞的背影，没有回头。你活着——以消失的方式。",
+      "audio": "audio/ending_ghost.mp3"
     },
     "ending_caught": {
       "id": "ending_caught",
@@ -229,7 +314,8 @@
       "location": "结局",
       "caption": "零点那条线，到此为止。",
       "endingTitle": "结局 · 落网",
-      "endingBody": "红裙女人站在玻璃后面，点了一支烟。胶片被摊开在灯下，像一片湿透的肺。你听见有人说：零点那条线，到此为止。雨还在下，可已经与你无关。"
+      "endingBody": "红裙女人站在玻璃后面，点了一支烟。胶片被摊开在灯下，像一片湿透的肺。你听见有人说：零点那条线，到此为止。雨还在下，可已经与你无关。",
+      "audio": "audio/ending_caught.mp3"
     },
     "ending_hook": {
       "id": "ending_hook",
@@ -238,7 +324,8 @@
       "location": "结局",
       "caption": "他们开始怀疑自己。",
       "endingTitle": "结局 · 倒钩",
-      "endingBody": "空胶片被他们当了真。对岸的电台乱了三天。老周寄来一张无字明信片，背面只有一个句号。你还活着，真货仍贴在鞋垫下——而他们开始怀疑每一场雨。"
+      "endingBody": "空胶片被他们当了真。对岸的电台乱了三天。老周寄来一张无字明信片，背面只有一个句号。你还活着，真货仍贴在鞋垫下——而他们开始怀疑每一场雨。",
+      "audio": "audio/ending_hook.mp3"
     }
   }
 }

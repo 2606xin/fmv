@@ -42,7 +42,10 @@ export interface StoryNode {
   type: NodeType;
   /** public/media 下的文件名 */
   media: string;
-  /** 静帧展示秒数；视频可省略（播完再出选项） */
+  /** 节点旁白/配音（public/media 下的相对路径，如 audio/n02_code.mp3）。
+   * 存在时由音频驱动节奏：静帧等旁白读完；视频播完定格末帧等旁白。 */
+  audio?: string;
+  /** 静帧展示秒数；视频可省略（播完再出选项）。有 audio 时仅作音频缺失的兜底 */
   duration?: number;
   /** 底部字幕/旁白 */
   caption?: string;
