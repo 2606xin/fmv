@@ -168,6 +168,27 @@ export default function App() {
     setSlots(loadSlots());
   }, []);
 
+  /** 剧情回顾：以初始数值直接进入某场景（flags/stats 归零） */
+  const jumpToNode = useCallback(
+    (nodeId: string) => {
+      if (!story || !story.nodes[nodeId]) return;
+      const base = createInitialState(story);
+      setState({
+        ...base,
+        nodeId,
+        history: [
+          { nodeId, caption: story.nodes[nodeId]?.caption, at: Date.now() },
+        ],
+        updatedAt: Date.now(),
+      });
+      setMode("play");
+      setAwaitingChoice(false);
+      setSkipToken(0);
+      setOverlay("none");
+    },
+    [story],
+  );
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.repeat) return;
@@ -332,6 +353,7 @@ export default function App() {
               clearUnlocks(story.id);
               setUnlocks(loadUnlocks(story.id));
             }}
+            onJump={jumpToNode}
             onClose={() => setOverlay("none")}
           />
         ) : null}
