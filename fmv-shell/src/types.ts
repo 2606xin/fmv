@@ -16,10 +16,20 @@ export interface NextIf {
   next: string;
 }
 
+export interface ChoiceSpot {
+  /** 画面内百分比坐标（0-100），标记出现在选项亮起时，可点击 */
+  x: number;
+  y: number;
+  /** 悬停提示的地点标签（如「巷口」「影院」） */
+  label?: string;
+}
+
 export interface Choice {
   id: string;
   text: string;
   next: string;
+  /** 画面位置标记：有值时在图/视频对应位置出现可点击视线标记 */
+  spot?: ChoiceSpot;
   /** 选项可见条件；不满足则不显示 */
   require?: RequireCond;
   /** 选中后设置的布尔标志 */

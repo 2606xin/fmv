@@ -58,18 +58,23 @@ export function MediaStage({
   }, [node.id, node.type, node.duration, node.audio]);
 
   const src = `/media/${node.media}`;
+  // 结局节点若换成视频（.mp4）则静音循环播放，节奏由结局旁白驱动
+  const isEndingVideo =
+    node.type === "ending" && /\.mp4$/i.test(node.media);
 
   return (
     <div className="media-layer">
-      {node.type === "video" ? (
+      {node.type === "video" || isEndingVideo ? (
         <video
           key={node.id}
           ref={videoRef}
           src={src}
           autoPlay
           playsInline
+          muted={isEndingVideo}
+          loop={isEndingVideo}
           onEnded={() => {
-            if (!node.audio) finish.current();
+            if (!node.audio && !isEndingVideo) finish.current();
           }}
         />
       ) : (

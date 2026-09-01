@@ -28,6 +28,11 @@
           ],
           "inc": {
             "trust": 1
+          },
+          "spot": {
+            "x": 25,
+            "y": 55,
+            "label": "巷口"
           }
         },
         {
@@ -36,7 +41,12 @@
           "next": "n03_watch",
           "setFlags": [
             "alert"
-          ]
+          ],
+          "spot": {
+            "x": 75,
+            "y": 35,
+            "label": "红星影院"
+          }
         }
       ],
       "audio": "audio/n01_narr.mp3"
@@ -55,7 +65,12 @@
           "next": "n04_side",
           "setFlags": [
             "knowsCode"
-          ]
+          ],
+          "spot": {
+            "x": 40,
+            "y": 30,
+            "label": "侧门"
+          }
         },
         {
           "id": "n02_b",
@@ -63,7 +78,12 @@
           "next": "n05_lobby",
           "setFlags": [
             "knowsCode"
-          ]
+          ],
+          "spot": {
+            "x": 60,
+            "y": 78,
+            "label": "正门"
+          }
         }
       ],
       "audio": "audio/n02_code.mp3"
@@ -85,6 +105,11 @@
           ],
           "inc": {
             "suspicion": 1
+          },
+          "spot": {
+            "x": 30,
+            "y": 50,
+            "label": "侧门"
           }
         },
         {
@@ -96,6 +121,11 @@
           ],
           "inc": {
             "suspicion": 1
+          },
+          "spot": {
+            "x": 80,
+            "y": 50,
+            "label": "正门"
           }
         }
       ],
@@ -118,6 +148,11 @@
           ],
           "inc": {
             "suspicion": 1
+          },
+          "spot": {
+            "x": 35,
+            "y": 65,
+            "label": "递出胶片"
           }
         },
         {
@@ -126,6 +161,11 @@
           "next": "n06_password",
           "inc": {
             "trust": 1
+          },
+          "spot": {
+            "x": 22,
+            "y": 43,
+            "label": "老周"
           }
         },
         {
@@ -142,6 +182,11 @@
           ],
           "inc": {
             "trust": 2
+          },
+          "spot": {
+            "x": 78,
+            "y": 51,
+            "label": "门外"
           }
         }
       ],
@@ -164,6 +209,11 @@
           ],
           "inc": {
             "suspicion": 2
+          },
+          "spot": {
+            "x": 45,
+            "y": 66,
+            "label": "交给她"
           }
         },
         {
@@ -175,6 +225,11 @@
           ],
           "inc": {
             "trust": 1
+          },
+          "spot": {
+            "x": 32,
+            "y": 42,
+            "label": "出口"
           }
         },
         {
@@ -185,6 +240,11 @@
             "flags": [
               "knowsCode"
             ]
+          },
+          "spot": {
+            "x": 55,
+            "y": 46,
+            "label": "试探"
           }
         }
       ],
@@ -209,6 +269,11 @@
           "inc": {
             "trust": 1,
             "suspicion": 1
+          },
+          "spot": {
+            "x": 70,
+            "y": 50,
+            "label": "去侧门"
           }
         }
       ],
@@ -228,7 +293,12 @@
           "next": "n07_hand",
           "setFlags": [
             "gavePassword"
-          ]
+          ],
+          "spot": {
+            "x": 50,
+            "y": 60,
+            "label": "交出胶片"
+          }
         }
       ],
       "audio": "audio/n06_password.mp3"
@@ -300,7 +370,7 @@
     "ending_ghost": {
       "id": "ending_ghost",
       "type": "ending",
-      "media": "ending_ghost.jpg",
+      "media": "ending_ghost.mp4",
       "location": "结局",
       "caption": "你没再出现在这座城里。",
       "endingTitle": "结局 · 影子",
@@ -310,7 +380,7 @@
     "ending_caught": {
       "id": "ending_caught",
       "type": "ending",
-      "media": "ending_caught.jpg",
+      "media": "ending_caught.mp4",
       "location": "结局",
       "caption": "零点那条线，到此为止。",
       "endingTitle": "结局 · 落网",
@@ -320,7 +390,7 @@
     "ending_hook": {
       "id": "ending_hook",
       "type": "ending",
-      "media": "ending_hook.jpg",
+      "media": "ending_hook.mp4",
       "location": "结局",
       "caption": "他们开始怀疑自己。",
       "endingTitle": "结局 · 倒钩",

@@ -110,6 +110,12 @@ button:focus-visible {
   height: 100%;
   object-fit: cover;
   display: block;
+  animation: mediaIn 0.45s ease both;
+}
+
+@keyframes mediaIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .media-layer img.kenburns {
@@ -297,6 +303,110 @@ button:focus-visible {
   font-size: 13px;
   letter-spacing: 0.2em;
   min-width: 1.6em;
+}
+
+/* ===== 画面位置标记（点图选择） ===== */
+.spots {
+  position: absolute;
+  inset: 0;
+  z-index: 11;
+  pointer-events: none;
+}
+
+.spot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  padding: 26px; /* 扩大点击热区 */
+  background: none;
+}
+
+.spot-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 14px rgba(196, 163, 90, 0.9);
+}
+
+.spot-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 34px;
+  height: 34px;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(196, 163, 90, 0.65);
+  border-radius: 50%;
+  animation: spotPulse 2.2s ease-out infinite;
+}
+
+@keyframes spotPulse {
+  0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0.9; }
+  70% { transform: translate(-50%, -50%) scale(1.6); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(1.6); opacity: 0; }
+}
+
+.spot-num {
+  position: absolute;
+  left: 50%;
+  top: calc(50% + 14px);
+  transform: translateX(-50%);
+  font-size: 11px;
+  color: var(--gold-soft);
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 8px rgba(0,0,0,.9);
+}
+
+.spot-tip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(50% + 30px);
+  transform: translateX(-50%) translateY(6px);
+  min-width: 120px;
+  max-width: 240px;
+  padding: 8px 12px;
+  background: rgba(6, 7, 10, 0.88);
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--gold);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  white-space: nowrap;
+}
+
+.spot:hover .spot-tip,
+.spot:focus-visible .spot-tip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.spot-tip em {
+  display: block;
+  font-style: normal;
+  color: var(--gold-soft);
+  font-size: 12px;
+  letter-spacing: 0.28em;
+  margin-bottom: 4px;
+}
+
+.spot-tip i {
+  display: block;
+  font-style: normal;
+  font-size: 13px;
+  color: var(--ink);
+  letter-spacing: 0.08em;
+  white-space: normal;
+}
+
+.spot:hover .spot-dot {
+  background: var(--gold-soft);
+  box-shadow: 0 0 22px rgba(226, 201, 138, 1);
 }
 
 /* ===== HUD ===== */

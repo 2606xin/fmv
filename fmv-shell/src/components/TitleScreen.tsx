@@ -18,7 +18,14 @@ export function TitleScreen({
   return (
     <div className="title-screen">
       <div className="bg">
-        <img src="/media/title.jpg" alt="" />
+        <video
+          src="/media/title.mp4"
+          poster="/media/title.jpg"
+          autoPlay
+          muted
+          loop
+          playsInline
+        />
       </div>
       <div className="eyebrow">互动影游</div>
       <h1>{title}</h1>

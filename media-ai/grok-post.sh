@@ -6,9 +6,14 @@ IN="$1"; OUT="$2"; DUR="$3"; MOOD="$4"
 FF=$(python3 -c "import imageio_ffmpeg; print(imageio_ffmpeg.get_ffmpeg_exe())")
 FADE_OUT=$(python3 -c "print(max(0, $DUR - 0.9))")
 
-GRADE="eq=saturation=1.06:contrast=1.03,noise=alls=5:allf=t,vignette=PI/4.6,fade=t=in:st=0:d=0.7,fade=t=out:st=${FADE_OUT}:d=0.9,setsar=1"
+GRADE="eq=saturation=1.06:contrast=1.03,noise=alls=5:allf=t,vignette=PI/4.6,fade=t=in:st=0:d=0.7,setsar=1"
 
-if [ "$MOOD" = "rain" ]; then
+if [ "$MOOD" = "silent" ]; then
+  # 标题页/结局用：只做画面（升采样+调色），不加音轨（游戏里有 BGM/旁白）
+  "$FF" -y -loglevel error -i "$IN" \
+    -filter_complex "[0:v]scale=1920:1080:flags=lanczos,unsharp=5:5:0.5:5:5:0.0,${GRADE},format=yuv420p[v]" \
+    -map "[v]" -c:v libx264 -preset medium -crf 20 -movflags +faststart "$OUT"
+elif [ "$MOOD" = "rain" ]; then
   "$FF" -y -loglevel error -i "$IN" \
     -f lavfi -t "$DUR" -i "anoisesrc=color=pink:amplitude=0.55:sample_rate=44100" \
     -filter_complex "[0:v]scale=1920:1080:flags=lanczos,unsharp=5:5:0.5:5:5:0.0,${GRADE},format=yuv420p[v];[1:a]highpass=f=400,lowpass=f=1500,tremolo=f=0.35:d=0.35,volume=0.9,afade=t=in:st=0:d=1,afade=t=out:st=${FADE_OUT}:d=0.9,aformat=sample_rates=44100:channel_layouts=stereo[a]" \
