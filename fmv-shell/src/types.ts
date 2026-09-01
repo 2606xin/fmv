@@ -22,6 +22,10 @@ export interface ChoiceSpot {
   y: number;
   /** 悬停提示的地点标签（如「巷口」「影院」） */
   label?: string;
+  /** 弧线箭头朝向（度，0=向右，顺时针；180=向左，90=向下，270=向上） */
+  dir?: number;
+  /** 用环绕箭头（表示「绕行/环视」类移动） */
+  orbit?: boolean;
 }
 
 export interface Choice {

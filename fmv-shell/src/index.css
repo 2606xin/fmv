@@ -409,6 +409,49 @@ button:focus-visible {
   box-shadow: 0 0 22px rgba(226, 201, 138, 1);
 }
 
+/* 方向箭头：从光点出发的弧线（dir 旋转）或环绕箭头 */
+.spot-arrow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  color: var(--gold);
+  opacity: 0.85;
+  transform: translate(-14%, -50%) rotate(var(--dir, 0deg));
+  transform-origin: 7px 13px;
+  filter: drop-shadow(0 0 6px rgba(196, 163, 90, 0.8));
+  transition: opacity 0.18s ease, scale 0.18s ease;
+}
+
+.spot-arrow.orbit {
+  transform: translate(-50%, -50%);
+  transform-origin: center;
+  animation: spotOrbit 5s linear infinite;
+}
+
+@keyframes spotOrbit {
+  from { rotate: 0deg; }
+  to { rotate: 360deg; }
+}
+
+.spot:hover .spot-arrow {
+  opacity: 1;
+  scale: 1.12;
+  color: var(--gold-soft);
+}
+
+.spot-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 9%;
+  transform: translateX(-50%);
+  z-index: 11;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  color: rgba(232, 220, 200, 0.55);
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.9);
+  animation: rise 0.45s ease both;
+}
+
 /* ===== HUD ===== */
 .hud {
   position: absolute;
