@@ -1,0 +1,244 @@
+{
+  "id": "zero-hour",
+  "title": "零点接头",
+  "subtitle": "一次错误的敲门，会毁掉整条线",
+  "start": "n01_rain",
+  "stats": {
+    "trust": 0,
+    "suspicion": 0
+  },
+  "statLabels": {
+    "trust": "信任",
+    "suspicion": "怀疑"
+  },
+  "nodes": {
+    "n01_rain": {
+      "id": "n01_rain",
+      "type": "video",
+      "media": "n01_rain.mp4",
+      "location": "沿海小城 · 雨夜",
+      "caption": "一九九四年。雨把霓虹揉碎在积水里。你是「灰羽」——一条不该被写进档案的线。零点，废弃的红星影院。口袋里的缩微胶片，是整条线的命。",
+      "choices": [
+        {
+          "id": "n01_a",
+          "text": "在巷口把暗号再背一遍",
+          "next": "n02_code",
+          "setFlags": ["cautious"],
+          "inc": { "trust": 1 }
+        },
+        {
+          "id": "n01_b",
+          "text": "先绕影院走一圈，看有没有尾巴",
+          "next": "n03_watch",
+          "setFlags": ["alert"]
+        }
+      ]
+    },
+    "n02_code": {
+      "id": "n02_code",
+      "type": "still",
+      "media": "n02_code.jpg",
+      "duration": 7,
+      "location": "巷口 · 记忆",
+      "caption": "「红星」对「旧梦」。侧门敲三下，停，再敲两下。若有人先说「好雨」，你就走。你把口令咽回喉咙，像咽下一枚冰凉的钉子。",
+      "choices": [
+        {
+          "id": "n02_a",
+          "text": "去侧门，按老规矩敲",
+          "next": "n04_side",
+          "setFlags": ["knowsCode"]
+        },
+        {
+          "id": "n02_b",
+          "text": "从正门混进去，少惹人注意",
+          "next": "n05_lobby",
+          "setFlags": ["knowsCode"]
+        }
+      ]
+    },
+    "n03_watch": {
+      "id": "n03_watch",
+      "type": "still",
+      "media": "n03_watch.jpg",
+      "duration": 8,
+      "location": "红星影院 · 侧巷",
+      "caption": "侧巷里，灰大衣已经站得太久。烟蒂在脚边排成一行。他不看你。可雨声里，你听见打火机第二次响。",
+      "choices": [
+        {
+          "id": "n03_a",
+          "text": "装作路过，从侧门进",
+          "next": "n04_side",
+          "setFlags": ["sawTail"],
+          "inc": { "suspicion": 1 }
+        },
+        {
+          "id": "n03_b",
+          "text": "进正门，把自己埋进散场的人潮",
+          "next": "n05_lobby",
+          "setFlags": ["sawTail"],
+          "inc": { "suspicion": 1 }
+        }
+      ]
+    },
+    "n04_side": {
+      "id": "n04_side",
+      "type": "still",
+      "media": "n04_side.jpg",
+      "duration": 8,
+      "location": "红星影院 · 侧门",
+      "caption": "铁门里是黑的。老周的声音从暗处来，比记忆里更哑：「你迟到了。」他伸出手，掌心向上，像在等一场早该结束的雨。",
+      "choices": [
+        {
+          "id": "n04_a",
+          "text": "把胶片按进他手里",
+          "next": "n07_hand",
+          "setFlags": ["rushed"],
+          "inc": { "suspicion": 1 }
+        },
+        {
+          "id": "n04_b",
+          "text": "先对口令",
+          "next": "n06_password",
+          "inc": { "trust": 1 }
+        },
+        {
+          "id": "n04_c",
+          "text": "低声说：外面有人",
+          "next": "n06_password",
+          "require": { "flags": ["sawTail"] },
+          "setFlags": ["warned"],
+          "inc": { "trust": 2 }
+        }
+      ]
+    },
+    "n05_lobby": {
+      "id": "n05_lobby",
+      "type": "still",
+      "media": "n05_lobby.jpg",
+      "duration": 8,
+      "location": "红星影院 · 大堂",
+      "caption": "大堂只剩一只坏掉的灯。红裙女人靠在旧海报下，笑：「老周发烧，今晚我来接。」她的耳环是新的。鞋底却没有雨。",
+      "choices": [
+        {
+          "id": "n05_a",
+          "text": "把胶片给她",
+          "next": "ending_caught",
+          "setFlags": ["betrayed"],
+          "inc": { "suspicion": 2 }
+        },
+        {
+          "id": "n05_b",
+          "text": "摇头：我不认识你",
+          "next": "n04_side",
+          "setFlags": ["rejectedBait"],
+          "inc": { "trust": 1 }
+        },
+        {
+          "id": "n05_c",
+          "text": "试探她：「今晚好雨。」",
+          "next": "n05_probe",
+          "require": { "flags": ["knowsCode"] }
+        }
+      ]
+    },
+    "n05_probe": {
+      "id": "n05_probe",
+      "type": "still",
+      "media": "n05_probe.jpg",
+      "duration": 6,
+      "location": "红星影院 · 大堂",
+      "caption": "她的笑僵了半秒。她说：「是啊，好雨。」——错了。正确的回应是离开。你已经转身，红裙在灯里像一道伤口。",
+      "choices": [
+        {
+          "id": "n05p_a",
+          "text": "去侧门找老周",
+          "next": "n04_side",
+          "setFlags": ["rejectedBait", "probed"],
+          "inc": { "trust": 1, "suspicion": 1 }
+        }
+      ]
+    },
+    "n06_password": {
+      "id": "n06_password",
+      "type": "still",
+      "media": "n06_password.jpg",
+      "duration": 7,
+      "location": "放映间外",
+      "caption": "「红星。」「旧梦。」他点头，像把一块石头放回原处。你们交换一个极短的眼神：今晚不干净。",
+      "choices": [
+        {
+          "id": "n06_a",
+          "text": "准备交出胶片",
+          "next": "n07_hand",
+          "setFlags": ["gavePassword"]
+        }
+      ]
+    },
+    "n07_hand": {
+      "id": "n07_hand",
+      "type": "video",
+      "media": "n07_hand.mp4",
+      "location": "消防通道",
+      "caption": "胶片离开口袋的瞬间，整栋楼像轻轻吸了一口气。远处，正门的铁链响了一下。你必须现在决定，什么才是真的。",
+      "choices": [
+        {
+          "id": "n07_a",
+          "text": "交出真胶片，走消防通道",
+          "next": "ending_ghost",
+          "setFlags": ["gaveReal"],
+          "nextIf": [
+            {
+              "require": { "flags": ["sawTail"], "notFlags": ["warned"] },
+              "next": "ending_caught"
+            },
+            {
+              "require": { "min": { "suspicion": 2 } },
+              "next": "ending_caught"
+            }
+          ]
+        },
+        {
+          "id": "n07_b",
+          "text": "把空胶片塞过去，真货仍在鞋垫下",
+          "next": "ending_hook",
+          "setFlags": ["gaveFake"],
+          "inc": { "trust": 1 }
+        },
+        {
+          "id": "n07_c",
+          "text": "让老周先走，你殿后",
+          "next": "ending_ghost",
+          "require": { "min": { "trust": 2 } },
+          "setFlags": ["gaveReal", "covered"]
+        }
+      ]
+    },
+    "ending_ghost": {
+      "id": "ending_ghost",
+      "type": "ending",
+      "media": "ending_ghost.jpg",
+      "location": "结局",
+      "caption": "你没再出现在这座城里。",
+      "endingTitle": "结局 · 影子",
+      "endingBody": "线还在。灰羽这两个字被从名册上划掉，像从未下过这场雨。三天后有人在码头看见一个撑伞的背影，没有回头。你活着——以消失的方式。"
+    },
+    "ending_caught": {
+      "id": "ending_caught",
+      "type": "ending",
+      "media": "ending_caught.jpg",
+      "location": "结局",
+      "caption": "零点那条线，到此为止。",
+      "endingTitle": "结局 · 落网",
+      "endingBody": "红裙女人站在玻璃后面，点了一支烟。胶片被摊开在灯下，像一片湿透的肺。你听见有人说：零点那条线，到此为止。雨还在下，可已经与你无关。"
+    },
+    "ending_hook": {
+      "id": "ending_hook",
+      "type": "ending",
+      "media": "ending_hook.jpg",
+      "location": "结局",
+      "caption": "他们开始怀疑自己。",
+      "endingTitle": "结局 · 倒钩",
+      "endingBody": "空胶片被他们当了真。对岸的电台乱了三天。老周寄来一张无字明信片，背面只有一个句号。你还活着，真货仍贴在鞋垫下——而他们开始怀疑每一场雨。"
+    }
+  }
+}
