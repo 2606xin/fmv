@@ -542,3 +542,141 @@ input[type="range"] {
 @media (min-width: 1920px) {
   .choice { font-size: 18px; }
 }
+
+/* ===== 路线图 ===== */
+.route-map-panel {
+  width: min(760px, 92%);
+}
+
+.rm-sub {
+  color: var(--ink-dim);
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  margin: -14px 0 16px;
+}
+
+.rm-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.rm-card {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 14px 16px;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rm-card.dim {
+  opacity: 0.55;
+  border-style: dashed;
+}
+
+.rm-card.lit {
+  border-color: var(--line);
+  background: rgba(196, 163, 90, 0.06);
+  border-style: solid;
+}
+
+.rm-card.lit.e-ending_ghost { border-left: 3px solid #3fae6a; }
+.rm-card.lit.e-ending_caught { border-left: 3px solid #d8504a; }
+.rm-card.lit.e-ending_hook { border-left: 3px solid #d99a3d; }
+
+.rm-card-title {
+  font-size: 16px;
+  letter-spacing: 0.2em;
+  color: var(--gold-soft);
+}
+
+.rm-card-body {
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--ink-dim);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
+}
+
+.rm-card-meta {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--ink-dim);
+}
+
+.rm-history-head {
+  margin: 22px 0 10px;
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+}
+
+.rm-routes {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 240px;
+  overflow: auto;
+}
+
+.rm-route {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 12px;
+  align-items: baseline;
+  text-align: left;
+  padding: 9px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 13px;
+}
+
+.rm-route:hover { border-color: var(--line); }
+
+.rm-route.e-ending_ghost .rm-route-title { color: #3fae6a; }
+.rm-route.e-ending_caught .rm-route-title { color: #d8504a; }
+.rm-route.e-ending_hook .rm-route-title { color: #d99a3d; }
+
+.rm-route-title {
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
+
+.rm-route-steps {
+  color: var(--ink-dim);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rm-route-time {
+  color: var(--ink-dim);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+.rm-route-detail {
+  margin-top: 6px;
+  padding: 8px 12px;
+  border-left: 2px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.rm-route-path {
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px;
+  color: var(--ink-dim);
+  word-break: break-all;
+}
+
+.rm-empty {
+  color: var(--ink-dim);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  padding: 8px 0;
+}

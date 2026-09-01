@@ -85,6 +85,7 @@ export function PauseMenu({
   onLoad,
   onSettings,
   onHistory,
+  onRouteMap,
   onTitle,
   onClose,
 }: {
@@ -93,6 +94,7 @@ export function PauseMenu({
   onLoad: (slot: number) => void;
   onSettings: () => void;
   onHistory: () => void;
+  onRouteMap: () => void;
   onTitle: () => void;
   onClose: () => void;
 }) {
@@ -125,6 +127,9 @@ export function PauseMenu({
           </button>
           <button className="ghost-btn" onClick={onHistory}>
             记录
+          </button>
+          <button className="ghost-btn" onClick={onRouteMap}>
+            路线图
           </button>
           <button className="ghost-btn" onClick={onSettings}>
             设置

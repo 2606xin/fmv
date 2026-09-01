@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Choice, GameState, Settings, Story } from "./types";
 import {
   applyChoice,
@@ -19,13 +19,21 @@ import { TitleScreen } from "./components/TitleScreen";
 import { MediaStage } from "./components/MediaStage";
 import { ChoiceOverlay } from "./components/ChoiceOverlay";
 import { EndingCard } from "./components/EndingCard";
+import { RouteMapPanel } from "./components/RouteMapPanel";
 import {
   HistoryPanel,
   PauseMenu,
   SettingsPanel,
 } from "./components/Panels";
+import {
+  clearUnlocks,
+  loadUnlocks,
+  recordRoute,
+  routeOfState,
+} from "./engine/unlocks";
+import type { StoryUnlocks } from "./engine/unlocks";
 
-type Overlay = "none" | "pause" | "settings" | "history";
+type Overlay = "none" | "pause" | "settings" | "history" | "routemap";
 
 function previewOf(state: GameState, story: Story): string {
   const n = story.nodes[state.nodeId];
@@ -44,6 +52,11 @@ export default function App() {
   const [canCont, setCanCont] = useState(false);
   const [slots, setSlots] = useState(() => loadSlots());
   const [showHud, setShowHud] = useState(false);
+  const [unlocks, setUnlocks] = useState<StoryUnlocks>(() => ({
+    endings: [],
+    routes: [],
+  }));
+  const recordedRun = useRef("");
 
   useEffect(() => {
     fetch("/story.json")
@@ -54,6 +67,7 @@ export default function App() {
       .then((data: Story) => {
         setStory(data);
         setCanCont(hasContinue());
+        setUnlocks(loadUnlocks(data.id));
       })
       .catch((e: Error) => setError(e.message));
   }, []);
@@ -64,6 +78,16 @@ export default function App() {
 
   const node = story && state ? getNode(story, state.nodeId) : null;
   const isEnding = node?.type === "ending";
+
+  // 到达结局时记录本局路线（startedAt+nodeId 防重复）
+  useEffect(() => {
+    if (!story || !state || !isEnding) return;
+    const sig = `${state.startedAt}:${state.nodeId}`;
+    if (recordedRun.current === sig) return;
+    recordedRun.current = sig;
+    recordRoute(story.id, routeOfState(state, node?.endingTitle));
+    setUnlocks(loadUnlocks(story.id));
+  }, [story, state, isEnding, node?.endingTitle]);
   const choices = useMemo(() => {
     if (!node || !state || !awaitingChoice || isEnding) return [];
     return visibleChoices(node, state.flags, state.stats);
@@ -199,6 +223,7 @@ export default function App() {
               onStart={startNew}
               onContinue={continueGame}
               onSettings={() => setOverlay("settings")}
+              onRouteMap={() => setOverlay("routemap")}
             />
           </>
         ) : (
@@ -234,6 +259,7 @@ export default function App() {
                 <div className="hud">
                   <button onClick={skip}>跳过</button>
                   <button onClick={() => setOverlay("history")}>记录</button>
+                  <button onClick={() => setOverlay("routemap")}>路线图</button>
                   <button onClick={() => setOverlay("settings")}>设置</button>
                   <button onClick={() => setOverlay("pause")}>菜单</button>
                 </div>
@@ -274,7 +300,20 @@ export default function App() {
             }}
             onSettings={() => setOverlay("settings")}
             onHistory={() => setOverlay("history")}
+            onRouteMap={() => setOverlay("routemap")}
             onTitle={toTitle}
+            onClose={() => setOverlay("none")}
+          />
+        ) : null}
+        {overlay === "routemap" && story ? (
+          <RouteMapPanel
+            story={story}
+            storyId={story.id}
+            routes={unlocks.routes}
+            onClear={() => {
+              clearUnlocks(story.id);
+              setUnlocks(loadUnlocks(story.id));
+            }}
             onClose={() => setOverlay("none")}
           />
         ) : null}

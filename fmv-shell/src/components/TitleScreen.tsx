@@ -5,6 +5,7 @@ export function TitleScreen({
   onStart,
   onContinue,
   onSettings,
+  onRouteMap,
 }: {
   title: string;
   subtitle: string;
@@ -12,6 +13,7 @@ export function TitleScreen({
   onStart: () => void;
   onContinue: () => void;
   onSettings: () => void;
+  onRouteMap: () => void;
 }) {
   return (
     <div className="title-screen">
@@ -31,6 +33,9 @@ export function TitleScreen({
           disabled={!canContinue}
         >
           继续游戏
+        </button>
+        <button className="menu-item" onClick={onRouteMap}>
+          路线图
         </button>
         <button className="menu-item" onClick={onSettings}>
           设置
