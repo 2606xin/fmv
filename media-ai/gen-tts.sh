@@ -9,10 +9,10 @@ mkdir -p "$OUT" "$TMP"
 FF=$(python3 -c "import imageio_ffmpeg; print(imageio_ffmpeg.get_ffmpeg_exe())")
 
 # 声线表
-NARR="zh-CN-YunjianNeural|--rate=-12%|--pitch=-4Hz"      # 旁白：沉稳男
-LAOZHOU="zh-CN-YunyangNeural|--rate=-22%|--pitch=-14Hz"  # 老周：苍老男
-HONGQUN="zh-CN-XiaoxiaoNeural|--rate=-8%|--pitch=+3Hz"    # 红裙女人：女
-HUIYU="zh-CN-YunxiNeural|--rate=-10%|--pitch=-2Hz"       # 灰羽：年轻男
+NARR="zh-CN-YunjianNeural|--rate=-15%|--pitch=-4Hz"      # 旁白：沉稳男
+LAOZHOU="zh-CN-YunyangNeural|--rate=-25%|--pitch=-14Hz"  # 老周：苍老男
+HONGQUN="zh-CN-XiaoxiaoNeural|--rate=-10%|--pitch=+3Hz"    # 红裙女人：女
+HUIYU="zh-CN-YunxiNeural|--rate=-12%|--pitch=-2Hz"       # 灰羽：年轻男
 
 seg() { # $1=voice定义 $2=文本 $3=序号 → 输出 $TMP/seg-$3.mp3
   IFS='|' read -r V R P <<< "$1"
@@ -27,7 +27,7 @@ join() { # $1=输出文件 其后=段文件列表（每段尾补0.32s停顿后�
     idx=$((idx+1))
   done
   local n=$# chain="" j
-  for j in $(seq 0 $((n-1))); do chain+="[$j:a]apad=pad_dur=0.32[p$j];"; done
+  for j in $(seq 0 $((n-1))); do chain+="[$j:a]apad=pad_dur=0.5[p$j];"; done
   for j in $(seq 0 $((n-1))); do chain+="[p$j]"; done
   chain+="concat=n=$n:v=0:a=1[a]"
   "$FF" -y -loglevel error "${inputs[@]}" -filter_complex "$chain" -map "[a]" -c:a libmp3lame -q:a 4 "$outp"

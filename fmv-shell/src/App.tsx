@@ -20,6 +20,7 @@ import { MediaStage } from "./components/MediaStage";
 import { ChoiceOverlay } from "./components/ChoiceOverlay";
 import { EndingCard } from "./components/EndingCard";
 import { RouteMapPanel } from "./components/RouteMapPanel";
+import { useHoverSound } from "./components/useHoverSound";
 import {
   HistoryPanel,
   PauseMenu,
@@ -72,6 +73,7 @@ export default function App() {
     routes: [],
   }));
   const recordedRun = useRef("");
+  const hoverSound = useHoverSound(settings.volume);
 
   useEffect(() => {
     fetch("/story.json")
@@ -310,6 +312,7 @@ export default function App() {
         <div className="vignette" />
         <div className="letterbox" />
         <audio ref={bgmRef} src="/media/audio/bgm.mp3" loop preload="auto" />
+        {hoverSound}
 
         {overlay === "settings" ? (
           <SettingsPanel
