@@ -46,14 +46,13 @@ button:focus-visible {
   background: #000;
 }
 
-/* 16:9 电影画幅 */
+/* 舞台铺满整个窗口：媒体 object-fit:cover 自动裁切填充，任意窗口比例无黑边 */
 .stage {
   position: relative;
-  width: min(100vw, calc(100vh * 16 / 9));
-  height: min(100vh, calc(100vw * 9 / 16));
+  width: 100vw;
+  height: 100vh;
   background: #000;
   overflow: hidden;
-  box-shadow: 0 0 80px rgba(0, 0, 0, 0.8);
 }
 
 .grain,
