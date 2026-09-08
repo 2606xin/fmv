@@ -174,7 +174,8 @@ button:focus-visible {
   inset: 0;
   z-index: -1;
 }
-.title-screen .bg img {
+.title-screen .bg img,
+.title-screen .bg video {
   width: 100%;
   height: 100%;
   object-fit: cover;
