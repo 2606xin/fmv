@@ -67,9 +67,12 @@ async function createWindow() {
   const win = new BrowserWindow({
     width: 1280,
     height: 720,
+    useContentSize: true, // 1280x720 即画面本身（16:9 正好占满）
     minWidth: 960,
     minHeight: 540,
     title: "零点接头",
+    titleBarStyle: "hiddenInset", // 无标题栏，红绿灯悬浮在暗色画面上
+    trafficLightPosition: { x: 14, y: 14 },
     backgroundColor: "#000000",
     autoHideMenuBar: true,
     webPreferences: {
