@@ -8,7 +8,8 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 0.0.0.0 --port 5173",
     "test": "vitest run",
-    "media": "bash scripts/generate-media.sh"
+    "media": "bash scripts/generate-media.sh",
+    "dist:mac": "npm run build && electron-builder --mac --config electron-builder.yml"
   },
   "dependencies": {
     "react": "^18.3.1",
@@ -18,8 +19,11 @@
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.4",
+    "electron": "^44.2.0",
+    "electron-builder": "^26.15.3",
     "typescript": "~5.6.3",
     "vite": "^5.4.11",
     "vitest": "^2.1.8"
-  }
+  },
+  "main": "electron/main.cjs"
 }

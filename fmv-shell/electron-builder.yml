@@ -1,0 +1,14 @@
+appId: com.zerohour.demo
+productName: 零点接头
+directories:
+  output: release
+files:
+  - dist/**/*
+  - electron/**/*
+asar: true
+mac:
+  target:
+    - target: dir
+      arch: [arm64]
+  category: public.app-category.games
+  identity: null
